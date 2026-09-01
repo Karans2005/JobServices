@@ -9,16 +9,11 @@ export default function DashboardPage(props) {
     favorites = [],
   } = props;
 
-  // Status Filter Checks
-  const completedBookings = bookings.filter(
-    (booking) => booking?.status === "completed"
-  ).length;
-
   return (
     <div className="card">
       <h3>JobPilot Dashboard</h3>
 
-      {/* First Stats Row */}
+      {/* Stats Row */}
       <div className="stats-grid">
         <div className="stat">
           Jobs
@@ -34,18 +29,10 @@ export default function DashboardPage(props) {
           Applications
           <strong>{applications.length}</strong>
         </div>
-      </div>
 
-      {/* Second Stats Row */}
-      <div className="stats-grid">
         <div className="stat">
           Bookings
           <strong>{bookings.length}</strong>
-        </div>
-
-        <div className="stat">
-          Completed
-          <strong>{completedBookings}</strong>
         </div>
 
         <div className="stat">

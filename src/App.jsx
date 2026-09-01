@@ -114,7 +114,7 @@ function AuthScreen({ setUser, usingFirebase }) {
     setLoading(true);
 
     try {
-      const response = await fetch("https://job-backend-2bfw.onrender.com/auth/register", {
+      const response = await fetch("https://job-backend-2bfw.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -328,6 +328,40 @@ function ProtectedApp({ user }) {
   useEffect(() => localStorage.setItem("jp_chats", JSON.stringify(chats)), [chats]);
 
   const services = ["Home Repair", "Carpentry", "Electrician", "Plumbing", "Vehicle Repair", "Cleaning", "AC Repair", "Painting","Software Engineer","AI Engineer","Cab Booking","Car Rental Service","Food Ordering","Sivil Engineer","Computer Services","Computer Engineer","Phone Repair","Speaker Repair","TV Repair","Other.."];
+  const token = localStorage.getItem("token");
+
+  const fetchDashboardBookings = async () => {
+  try {
+    const response = await fetch(
+      "https://job-backend-2bfw.onrender.com/bookings",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("DASHBOARD BOOKINGS:", data);
+
+    if (response.ok && data.status === 1) {
+      setBookings(data.bookings || []);
+    } else {
+      console.error("Dashboard bookings error:", data);
+    }
+  } catch (error) {
+    console.error("Dashboard bookings fetch error:", error);
+  }
+};
+
+useEffect(() => {
+  if (token) {
+    fetchDashboardBookings();
+  }
+}, []);
+
+
 
   const notify = (message) =>
     setNotifications((prev) => [
